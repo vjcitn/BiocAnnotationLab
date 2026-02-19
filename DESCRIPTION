@@ -19,8 +19,8 @@ License: Artistic-2.0
 VignetteBuilder: knitr
 biocViews: Infrastructure
 Encoding: UTF-8
-URL: https://github.com/vjcitn
-BugReports: https://github.com/vjcitn
+URL: https://github.com/vjcitn/BiocAnnotationLab
+BugReports: https://github.com/vjcitn/BiocAnnotationLab/issues
 RoxygenNote: 7.3.3
 Remotes:
 	vjcitn/GO.db2,

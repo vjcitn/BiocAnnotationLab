@@ -2,10 +2,13 @@
 % Please edit documentation in R/pkginfo.R
 \name{pinfo}
 \alias{pinfo}
-\title{dummy function}
+\title{Self-description}
 \usage{
 pinfo()
 }
 \description{
-dummy function
+Self-description
+}
+\examples{
+pinfo()
 }

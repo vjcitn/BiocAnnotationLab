@@ -1,4 +1,6 @@
-#' dummy function
+#' Self-description
+#' @examples
+#' pinfo()
 #' @export
 pinfo = function() {
   packageName()

@@ -62,7 +62,7 @@ TERM <- suppressMessages(AnnotationDbi::select(GO.db::GO.db,keys=GOID,columns="T
 ```
 
 Try it out:
-```{r setup}
+```{r setup,message=FALSE}
 GOID = c("GO:0001960", "GO:0001961", "GO:0010803", "GO:0060334", "GO:0060338", 
 "GO:0070099", "GO:0070103", "GO:0070107", "GO:0070758", "GO:1900234", 
 "GO:1902205", "GO:1902211", "GO:1902214", "GO:1902226", "GO:1903881", 
@@ -100,7 +100,7 @@ uses parquet representations of GO.db's tables.
 To avoid conflict with dplyr's `select`, GO.db3 defines `select3` to
 emulate AnnotationDbi::select.
 
-```{r chk3}
+```{r chk3,message=FALSE}
 library(GO.db3)
 chk = select3("GO.db3",keys=GOID, columns=c("GOID", "TERM"), keytype="GOID")
 head(chk)
@@ -129,7 +129,6 @@ converts ontologies in OWL or OBO formats to SQLite.  The README remarks that
 
 ```
 SQLite provides many advantages
-
  - files can be downloaded and subsequently queried without network latency
  - compared to querying a static rdf, owl, or obo file, there is no startup/parse delay
  - robust and performant
@@ -141,7 +140,7 @@ DBMSs like PostgreSQL, MySQL, Oracle, etc
 Here's how we can use a Semantic SQL representation of GO with ontoProc2.
 The `GOID` vector was defined above.
 
-```{r useo2}
+```{r useo2,message=FALSE}
 library(ontoProc2)
 gosem = retrieve_semsql_conn("go")
 chk1 = dplyr::tbl(gosem, "statements") |> 
@@ -175,11 +174,39 @@ encoded in Gene Ontology; a complete view is made available for SQL-based
 interrogation via ontoProc2.
 - ontoProc2 helps provide full programmatic access to any ontology
 managed in the Semantic SQL project.
+- It will be useful to work out exercises based on [rols](https://bioconductor.org/packages/rols),
+to help understand the added value of specific curation through packaging.
 
-## Next steps
+
+# `org.*.eg.db`: curating NCBI gene-oriented annotation
+
+The org packages are built using a complex pipeline that has a number
+of shortcomings.  We have examined its use of NCBI's gene-oriented annotation
+and propose a different approach.
+
+See [RNCBIGene](https://vjcitn.github.io/RNCBIGene/articles/RNCBIGene.html)
+which is in development.  Briefly, it is possible to 
+
+- create parquet representations of all gzipped text at NCBI's ftp site,
+- lodge these in egress-free cloud storage so that remote queries are supported,
+- provide retrieval and caching support to support efficient local usage,
+- avoid favoring any model organism for curated annotation support in Bioconductor.
+
+# Next steps
 
 - Community members are invited to comment on implications of
 strategic choices on annotation curation for their work.
 - GO.db3 should be brought to verifiable functional equivalence with GO.db.
+- RNCBIGene should be enhanced to emulate those `org.*.db` functions that are
+in use in the ecosystem.
 - Other annotation elements should be looked at for opporunities to
 use more efficient representations and interfaces.
+- It is of interest to note that there are no "first-class" representations
+of EFO or CL in Bioconductor.  ontoProc2 and ontoProc address these ontologies, but
+are these sufficient?
+
+# Session information
+
+```{r lksess}
+sessionInfo()
+```
