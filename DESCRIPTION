@@ -13,8 +13,8 @@ Description: This package organizes information and documentation
 	AnnotationPipeline and AnnotationDbi strategies that
 	have served the community for two decades.
 Depends: R (>= 4.1.0), tools, utils, methods
-Suggests: knitr, BiocStyle, testthat, rmarkdown,
-	GO.db2, GO.db3, RNCBIGene
+Suggests: knitr, BiocStyle, testthat, rmarkdown, GO.db,
+	GO.db2, GO.db3, RNCBIGene, AnnotationDbi
 License: Artistic-2.0
 VignetteBuilder: knitr
 biocViews: Infrastructure
