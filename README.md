@@ -46,4 +46,6 @@ geneontology.org provides guidance on annotations [here](https://geneontology.or
 For human, the download link is [here](https://current.geneontology.org/products/pages/downloads.html).
 The header of `goa_human.gaf` indicates that it is based on the image of GO of 2025-10-05.
 
+The collections of past releases at https://release.geneontology.org/ indicate one of 2025-10-10, but not 10-05.
+
 
