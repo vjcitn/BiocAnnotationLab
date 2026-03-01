@@ -1,4 +1,6 @@
-# SQLite to Parquet Converter
+# SQLite to Parquet Converter, oriented to the TxDb SQLite model
+
+NB -- this software strategy was tailored to GO.db at https://github.com/vjcitn/BiocGOprep
 
 A high-performance tool for converting SQLite databases to Parquet format using DuckDB's efficient zero-copy export capabilities. Optimized for genomic annotation databases and other large datasets.
 
