@@ -15,9 +15,23 @@ component.  Visitors are invited to comment in repository issues.
 
 ## Requirements
 
+### Gene Ontology and Gene Ontology Annotation
+
+#### Overview
+
+Gene Ontology is a structured vocabulary for the domain of gene function.
+
+Gene Ontology Annotation is a process of species-specific mapping from genes to Gene Ontology terms.
+
+Bioconductor's GO.db presents the vocabulary.  Packages of the form Org.[species].[annsrc].db
+present Gene Ontology Annotation.  As of Bioconductor 3.22 the BioconductorAnnotationPipeline
+scripts produce both resources.
+
+#### Details
+
 There is significant coupling between annotation resources. As of 3.22, org.Hs.eg.db and GO.db
 need to be synchronized to the same version of GO, even though the org
-pack is based on annotations from NCBI, which notes (at the FTP site):
+package is based on annotations from NCBI, which notes (at the FTP site):
 
 ```
            This file reports the GO terms that have been associated
@@ -48,4 +62,24 @@ The header of `goa_human.gaf` indicates that it is based on the image of GO of 2
 
 The collections of past releases at https://release.geneontology.org/ indicate one of 2025-10-10, but not 10-05.
 
+Furthermore https://ftp.ncbi.nlm.nih.gov/gene/DATA/go_process.xml includes the following
+```
+<database name="GOA" url="http://www.ebi.ac.uk/GOA/">
+<file name="goa_human.gaf.gz" desc="Homo sapiens" src-column="1" target-column="5" srcid2geneid-file="ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz" target-transform="s/\.\d*$//">
+<tax-id>9606</tax-id>
+</file>
+<file name="goa_human.gaf.gz" desc="Homo sapiens" src-column="1" target-column="2" srcid2geneid-file="ftp://ftp.ncbi.nih.gov/gene/DATA/.misc/RNAcentral.txt">
+<tax-id>9606</tax-id>
+</file>
+</database>
+```
 
+This mentions EBI and two possible sources of "gaf" files.  The annotation pipeline uses the gene2go.gz from
+NCBI FTP, which is created for all organisms, and which is "updated daily".  The go_process.xml
+identifies https://current.geneontology.org/ontology/go.obo, so this is probably where the
+underlying ontology is obtained "daily".  Thus a consistent procedure for species-specific annotation
+would be
+
+- obtain the gaf file and note the associated GO date
+- obtain the associated GO.obo [for late 2025 there is not an exact match]
+- produce GO.db and `org.[].[].db` from those resources.
