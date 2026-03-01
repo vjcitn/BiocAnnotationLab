@@ -14,9 +14,9 @@ zcat "$STUB.gz" | head -1 | gzip - > /tmp/head
 
 if [ "$STUB" = "gene_refseq_uniprotkb_collab" ]; then
   echo "Using column 3 for taxid filtering (uniprotkb format)"
-  zcat "$STUB.gz" | awk -F'\t' -v taxid="$TAXID" '$3 == taxid' | gzip - > /tmp/Hs.$STUB.gz
+  zcat "$STUB.gz" | awk -F'\t' -v taxid="$TAXID" '$3 == taxid' | gzip - > /tmp/$TAG.$STUB.gz
 else
-  zcat "$STUB.gz" | awk -F'\t' -v taxid="$TAXID" '$1 == taxid' | gzip - > /tmp/Hs.$STUB.gz
+  zcat "$STUB.gz" | awk -F'\t' -v taxid="$TAXID" '$1 == taxid' | gzip - > /tmp/$TAG.$STUB.gz
 fi
-cat /tmp/head /tmp/Hs.$STUB.gz > Hs.$STUB.gz
-Rscript -e "source('txt2parq.R'); txt2parq('$STUB')"
+cat /tmp/head /tmp/$TAG.$STUB.gz > $TAG.$STUB.gz
+Rscript -e "source('txt2parq.R'); txt2parq('$STUB', pref='$TAG')"
