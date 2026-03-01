@@ -27,7 +27,7 @@ Bioconductor's GO.db presents the vocabulary.  Packages of the form Org.[species
 present Gene Ontology Annotation.  As of Bioconductor 3.22 the BioconductorAnnotationPipeline
 scripts produce both resources.
 
-#### Details
+#### Details on process
 
 There is significant coupling between annotation resources. As of 3.22, org.Hs.eg.db and GO.db
 need to be synchronized to the same version of GO, even though the org
@@ -83,3 +83,39 @@ would be
 - obtain the gaf file and note the associated GO date
 - obtain the associated GO.obo [for late 2025 there is not an exact match]
 - produce GO.db and `org.[].[].db` from those resources.
+
+#### Details on outcomes
+
+For the human case, we have two basic requirements:
+
+1) The 'mapping environments' noted below must be produces
+```
+> ls(2)
+ [1] "org.Hs.eg"                "org.Hs.eg_dbconn"        
+ [3] "org.Hs.eg_dbfile"         "org.Hs.eg_dbInfo"        
+ [5] "org.Hs.eg_dbschema"       "org.Hs.eg.db"            
+ [7] "org.Hs.egACCNUM"          "org.Hs.egACCNUM2EG"      
+ [9] "org.Hs.egALIAS2EG"        "org.Hs.egCHR"            
+[11] "org.Hs.egCHRLENGTHS"      "org.Hs.egCHRLOC"         
+[13] "org.Hs.egCHRLOCEND"       "org.Hs.egENSEMBL"        
+[15] "org.Hs.egENSEMBL2EG"      "org.Hs.egENSEMBLPROT"    
+[17] "org.Hs.egENSEMBLPROT2EG"  "org.Hs.egENSEMBLTRANS"   
+[19] "org.Hs.egENSEMBLTRANS2EG" "org.Hs.egENZYME"         
+[21] "org.Hs.egENZYME2EG"       "org.Hs.egGENENAME"       
+[23] "org.Hs.egGENETYPE"        "org.Hs.egGO"             
+[25] "org.Hs.egGO2ALLEGS"       "org.Hs.egGO2EG"          
+[27] "org.Hs.egMAP"             "org.Hs.egMAP2EG"         
+[29] "org.Hs.egMAPCOUNTS"       "org.Hs.egOMIM"           
+[31] "org.Hs.egOMIM2EG"         "org.Hs.egORGANISM"       
+[33] "org.Hs.egPATH"            "org.Hs.egPATH2EG"        
+[35] "org.Hs.egPFAM"            "org.Hs.egPMID"           
+[37] "org.Hs.egPMID2EG"         "org.Hs.egPROSITE"        
+[39] "org.Hs.egREFSEQ"          "org.Hs.egREFSEQ2EG"      
+[41] "org.Hs.egSYMBOL"          "org.Hs.egSYMBOL2EG"      
+[43] "org.Hs.egUCSCKG"          "org.Hs.egUNIPROT"        
+```
+
+2) The SQLite tables are used directly with `AnnotationDbi::select`.
+
+Can this be streamlined with decoupled (but
+consistently synchronized) production of GO.db?
