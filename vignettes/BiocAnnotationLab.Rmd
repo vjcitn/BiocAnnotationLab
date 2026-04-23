@@ -31,10 +31,7 @@ Basic facts:
     - It is powered by a 70MB SQLite database with 14 tables following a bespoke schema
     - The production of the GO.db package is mixed with production of numerous other annotation
 packages in the BioconductorAnnotationPipeline system.
-    - A parquet-based representation with equivalent content can fit in 7MB of disk.  See
-[GO.db3](https://github.com/vjcitn/GO.db3) and note the OBO-parquet transformation
-resource at [BiocGOprep](https://github.com/vjcitn/BiocGOprep).
-    - Yet another approach to Gene Ontology (and indeed all ontologies at OBOFoundry)
+    - We will focus on another approach to Gene Ontology (and indeed all ontologies at OBOFoundry)
 leverages semantic SQL -- see [ontoProc2](https://vjcitn.github.io/ontoProc2/), in development.
 
 - `org.*.*.db`
@@ -47,7 +44,7 @@ in the pipeline, and this needs a fresh, maintainable approach
 - `TxDb.*.*...`
     - The architect is still with the project
     - Tooling to move from SQLite to parquet is available and produces 7x reduction
-in footprint
+in footprint.  See, for example, [experimental lkparq package](https://vjcitn.github.io/lkparq/articles/lkparq.html).
     - Upstream tasks are well-documented, but should be reviewed regularly
 
 # Gene Ontology: approaches to curation
@@ -91,37 +88,6 @@ hierarchy.
 get("GO:0001959", GO.db::GOBPCHILDREN)
 ```
 
-## GO.db3: a parquet-based approach
-
-In pursuit of a proof of concept, packages GO.db2 (SQLite-based) and GO.db3
-have been produced.  GO.db2 uses a simplified schema for the tables; GO.db3
-uses parquet representations of GO.db's tables.
-
-To avoid conflict with dplyr's `select`, GO.db3 defines `select3` to
-emulate AnnotationDbi::select.
-
-```{r chk3,message=FALSE}
-library(GO.db3)
-chk = select3("GO.db3",keys=GOID, columns=c("GOID", "TERM"), keytype="GOID")
-head(chk)
-```
-
-We can learn about the underlying resources, in `extdata/go323` and
-observe a sharp reduction in size of data footprint.
-
-```{r lkszzz}
-pfns = dir(system.file("extdata", "go323", package="GO.db3"), full=TRUE)
-head(basename(pfns))
-sum(file.size(pfns))
-```
-
-We wrap the hierarchy-oriented environments in functions for now.
-The environments are computed "on the fly"; only a few have been produced.
-
-```{r lkhi2}
-get("GO:0001960", GO.db3::GOBPPARENTS())
-```
-
 ## ontoProc2 for GO: using Semantic SQL
 
 The [INCAtools semantic SQL](https://github.com/INCATools/semantic-sql) project
@@ -162,16 +128,6 @@ file.size(slot(gosem, "dbname"))
 processes intermingled to address multiple objectives.
 - AnnotationDbi's "select" method is in conceptual conflict with
 the widely used select method of dplyr.
-- [GO.db3](https://github.com/vjcitn/GO.db3?tab=readme-ov-file#godb3-is-an-experimental-package-that-partially-emulates-godb) is a near-complete functionally compatible replacement for GO.db.
-- Production of GO.db3 is independent of all other annotation production
-processes; parquet production from OBO is documented in [BiocGOprep](https://github.com/vjcitn/BiocGOprep).
-- `GO.db3::select3` is provided to emulate `AnnotationDbi::select`, but other
-interrogation interfaces based on the parquet representation should
-be devised.  BiocGOprep produces parquet files following GO.db's schema; this
-is not essential but was adopted to simplify producing compatibility with legacy approaches.
-- Both GO.db and GO.db3 present only a very limited view of the relationships
-encoded in Gene Ontology; a complete view is made available for SQL-based
-interrogation via ontoProc2.
 - ontoProc2 helps provide full programmatic access to any ontology
 managed in the Semantic SQL project.
 - It will be useful to work out exercises based on [rols](https://bioconductor.org/packages/rols),
