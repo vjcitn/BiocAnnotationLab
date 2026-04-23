@@ -1,6 +1,6 @@
 Package: BiocAnnotationLab
 Title: An umbrella package organizing information on annotation strategies
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     person(given = "Vince",
            family = "Carey",
@@ -12,9 +12,9 @@ Description: This package organizes information and documentation
 	This provides an open resource as we sunset the 
 	AnnotationPipeline and AnnotationDbi strategies that
 	have served the community for two decades.
-Depends: R (>= 4.1.0), tools, utils, methods
+Depends: R (>= 4.1.0), tools, utils, methods, ontoProc2
 Suggests: knitr, BiocStyle, testthat, rmarkdown, GO.db,
-	GO.db2, GO.db3, RNCBIGene, AnnotationDbi
+	RNCBIGene, AnnotationDbi
 License: Artistic-2.0
 VignetteBuilder: knitr
 biocViews: Infrastructure
@@ -23,6 +23,5 @@ URL: https://github.com/vjcitn/BiocAnnotationLab
 BugReports: https://github.com/vjcitn/BiocAnnotationLab/issues
 RoxygenNote: 7.3.3
 Remotes:
-	vjcitn/GO.db2,
-	vjcitn/GO.db3,
+	vjcitn/ontoProc2
 	vjcitn/RNCBIGene
