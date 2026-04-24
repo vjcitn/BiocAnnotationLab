@@ -1,6 +1,6 @@
 Package: ontoProc2ui
 Title: Tidy Interface to GO Semantic SQL via DuckDB
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: 
     c(person("Vincent", "Carey", email = "stvjc@channing.harvard.edu",
            role = c("aut", "cre"),
@@ -27,6 +27,7 @@ Imports:
     methods, utils
 Suggests:
     testthat (>= 3.0.0),
+    DT,
     BiocStyle,
     knitr,
     rmarkdown,
