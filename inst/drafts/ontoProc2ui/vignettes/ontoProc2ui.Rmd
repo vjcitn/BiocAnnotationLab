@@ -81,7 +81,7 @@ object).
 All the implications of statements in Gene Ontology are
 available in the Semantic SQL representation.  "Implication"
 here refers to derivability in a logical system implemented
-in an OWL reasoner.  See [linkml](https://linkml-runtime.readthedocs.io)
+in an OWL reasoner.  See [OAK (ontology access kit)](https://incatools.github.io/ontology-access-kit/guide/relationships-and-graphs.html#further-notes-on-owl-and-graph-projection)
 for more background.
 
 ## Common predicates
